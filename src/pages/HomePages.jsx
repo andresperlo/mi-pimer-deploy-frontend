@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import axios from 'axios'
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'
+import CardMap from '../components/CardMap'
+import Modal from '../components/Modal'
 
 function HomePages() {
 
@@ -81,24 +83,8 @@ function HomePages() {
         setArticuloEditado(art)
     }
 
-    const cards = articulos.map(art =>
-        <div key={art._id} className="card" style={{ width: '18rem' }}>
-            <div className="card-body">
-                <h5 className="card-title">{art.title}</h5>
-                <p className="card-text">{art.body}</p>
-                <div className='d-flex'>
-                    <div className='mr-3'>
-                        <button type="button" onClick={() => handleClick(art)} className="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
-                            Modificar
-                </button>
-                        {/* aqui estaba el modal */}
-                    </div>
-                    <div className='ml-3'>
-                        <button onClick={() => DeleteArticle(art._id)} className="btn btn-outline-danger">Eliminar</button>
-                    </div>
-                </div>
-            </div>
-        </div>)
+    const cards = articulos.map(art => <CardMap art={art} key={art._id} id={art._id}
+        title={art.title} body={art.body} handleClick={handleClick} DeleteArticle={DeleteArticle} />)
 
     return (
         <div className="App">
@@ -127,30 +113,8 @@ function HomePages() {
                 </div>
             </div>
             {/* modal */}
-            <div className="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                        </div>
-                        <div className="modal-body">
-                            <div>
-                                <input type="text" value={articuloEditado.title} name='title'
-                                    className="form-control col-6" aria-describedby="emailHelp"
-                                    placeholder='Titulo' onChange={handleChangeModal} />
-
-                                <div className='pt-3'>
-                                    <textarea name="body" value={articuloEditado.body} cols="30" rows="3" placeholder='Mesaje' onChange={handleChangeModal} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" onClick={ArticlePuting} className="btn btn-outline-primary w-100"
-                                data-dismiss="modal">Guardar Cambios</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Modal articuloEditado={articuloEditado} handleChangeModal={handleChangeModal}
+                ArticlePuting={ArticlePuting} />
         </div>
     );
 }
