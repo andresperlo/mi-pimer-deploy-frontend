@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'
 import CardMap from '../components/CardMap'
 import Modal from '../components/Modal'
-import CreatePost from '../components/createPost'
+import CreatePost from '../components/CreatePost'
 
 function HomePages() {
 
@@ -32,9 +32,14 @@ function HomePages() {
                 )
                 traerArticulos()
             })
-            .catch(function (error) {
-                console.log(error)
-            })
+            .catch((err) => {
+
+                Swal.fire(
+                    'Error',
+                    err.response.data.mensaje,
+                    'warning'
+                )
+            });
         setNuevoArticulo(e.target.reset())
     }
 
@@ -47,6 +52,14 @@ function HomePages() {
                     'success'
                 )
                 traerArticulos()
+            })
+            .catch((err) => {
+
+                Swal.fire(
+                    'Error',
+                    err.response.data.mensaje,
+                    'warning'
+                )
             });
     }
 
