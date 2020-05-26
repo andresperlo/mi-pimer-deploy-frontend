@@ -97,15 +97,14 @@ function HomePages() {
         setArticuloEditado(art)
     }
 
-    const cards = articulos.map(art => <CardMap art={art} key={art._id} id={art._id}
-        title={art.title} body={art.body} handleClick={handleClick} DeleteArticle={DeleteArticle} />)
+    const cards = articulos.map(art => <CardMap art={art} key={art._id} id={art._id} title={art.title} body={art.body} handleClick={handleClick} DeleteArticle={DeleteArticle} />)
 
     return (
         <div className="App">
             <h1 className='py-3 text-center'>Home Page</h1>
-                
-             <CreatePost handleSubmit={handleSubmit} handleChange={handleChange}/>
-                
+
+            <CreatePost handleSubmit={handleSubmit} handleChange={handleChange} />
+
             <div className="container">
                 <div className="card-columns pt-3">
                     {cards}
