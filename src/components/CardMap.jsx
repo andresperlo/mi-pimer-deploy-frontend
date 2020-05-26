@@ -2,7 +2,7 @@ import React from 'react';
 
 function CardMap(props) {
     return (
-        <div key={props.key} className="card" style={{ width: '18rem' }}>
+        <div key={props.id} className="card" style={{ width: '18rem' }}>
             <div className="card-body">
                 <h5 className="card-title">{props.title}</h5>
                 <p className="card-text">{props.body}</p>
