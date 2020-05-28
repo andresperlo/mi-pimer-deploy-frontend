@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 function CardMap(props) {
+
     return (
+
         <div key={props.id} className="card" style={{ width: '18rem' }}>
             <div className="card-body">
-                <h5 className="card-title">{props.title}</h5>
+               <Link to={`/articulo/${props.id}`}><h5 className="card-title">{props.title}</h5></Link>
                 <p className="card-text">{props.body}</p>
                 <div className='d-flex'>
                     <div className='mr-3'>

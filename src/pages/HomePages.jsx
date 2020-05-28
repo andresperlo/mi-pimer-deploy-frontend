@@ -11,10 +11,12 @@ function HomePages() {
     const [nuevoArticulo, setNuevoArticulo] = useState({})
     const [articulos, setArticulos] = useState([]);
     const [articuloEditado, setArticuloEditado] = useState({ title: '', body: '' })
+    const [articulosamostrar, setArticulosamostrar] = useState([])
 
     const traerArticulos = useCallback(async () => {
         const res = await axios.get(`/.netlify/functions/api/v1/articulos`);
         setArticulos(res.data)
+        setArticulosamostrar(res.data)
     }, []);
 
     useEffect(() => {
@@ -89,6 +91,14 @@ function HomePages() {
         setNuevoArticulo({ ...nuevoArticulo, [e.target.name]: e.target.value })
     }
 
+    const handleChangeSearch = (e) =>{
+     /*    setBuscar({ ...buscar, [e.target.name]: e.target.value }) */
+        const titleSearch = articulos.filter(articulo => {
+            return articulo.title.toLowerCase().includes(e.target.value.toLowerCase())
+        })
+        setArticulosamostrar(titleSearch)
+    }
+
     const handleChangeModal = (e) => {
         setArticuloEditado({ ...articuloEditado, [e.target.name]: e.target.value })
     }
@@ -97,11 +107,16 @@ function HomePages() {
         setArticuloEditado(art)
     }
 
-    const cards = articulos.map(art => <CardMap art={art} key={art._id} id={art._id} title={art.title} body={art.body} handleClick={handleClick} DeleteArticle={DeleteArticle} />)
+
+    const cards = articulosamostrar.map(art => <CardMap art={art} key={art._id} id={art._id} title={art.title} body={art.body} handleClick={handleClick} DeleteArticle={DeleteArticle} />)
 
     return (
         <div className="App">
             <h1 className='py-3 text-center'>Home Page</h1>
+
+            <div className='col-3'>
+                <input  type="search" className="form-control" placeholder='Buscar ...' onChange={handleChangeSearch}/>
+            </div>
 
             <CreatePost handleSubmit={handleSubmit} handleChange={handleChange} />
 
